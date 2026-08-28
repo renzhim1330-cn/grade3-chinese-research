@@ -2,5 +2,7 @@
   "name": "一字定乾坤：汉字“炼字”AI视觉呈现研究单",
   "description": "基于AI视觉显像的汉字炼字对比实验A4研究单与互动展板，展现《泊船瓜洲》与《荷花》单字替换的视觉张力与三阶跃迁法则。",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
