@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif-sc: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', SimSun, serif;
+    --font-calligraphy: 'Ma Shan Zheng', 'Zhi Mang Xing', 'Kaiti', cursive;
+  }
+
+  body {
+    font-family: var(--font-serif-sc);
+    background-color: #f3efe6;
+    color: #1a1a1a;
+  }
+}
+
+.font-calligraphy {
+  font-family: var(--font-calligraphy);
+}
+
+.font-serif-sc {
+  font-family: var(--font-serif-sc);
+}
+
+/* Bento Grid Paper Board Styling */
+.bento-sheet {
+  background-color: #faf9f6;
+  border: 12px solid #e5e1d8;
+  color: #1a1a1a;
+  box-shadow: 0 12px 36px -4px rgba(26, 26, 26, 0.08), 0 0 1px 1px rgba(26, 26, 26, 0.1);
+}
+
+/* Bento Module Card */
+.bento-card {
+  background-color: #ffffff;
+  border: 1px solid #1a1a1a;
+}
+
+/* Masterpiece Cinnabar & Emerald Bento Card */
+.bento-masterpiece-card {
+  position: relative;
+  border: 2px solid #d94124;
+  background-color: rgba(240, 253, 244, 0.4);
+}
+
+/* Vermilion Circular Stamped Seal */
+.bento-seal {
+  border: 2px solid #d94124;
+  color: #d94124;
+  border-radius: 9999px;
+  transform: rotate(12deg);
+}
+
+/* Red Pen Teacher & Inquiry Markup */
+.red-pen-text {
+  color: #d94124;
+  font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive, sans-serif;
+}
+
+/* Print Optimization for exact A4 Standard */
+@media print {
+  body {
+    background: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .bento-sheet {
+    box-shadow: none !important;
+    border: 4px solid #1a1a1a !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    page-break-inside: avoid !important;
+    background-color: #ffffff !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+}
+
