@@ -1,21 +1,1183 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>一字定乾坤：汉字“炼字”AI视觉呈现研究单</title>
-    <meta name="description" content="基于AI视觉显像的汉字炼字对比实验A4研究单与互动展板，展现《泊船瓜洲》与《荷花》单字替换的视觉张力与三阶跃迁法则。" />
-    <meta property="og:title" content="一字定乾坤：汉字“炼字”AI视觉呈现研究单" />
-    <meta property="og:description" content="基于AI视觉显像的汉字炼字对比实验A4研究单与互动展板，展现《泊船瓜洲》与《荷花》单字替换的视觉张力与三阶跃迁法则。" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-stone-100 text-stone-900 antialiased selection:bg-amber-200 selection:text-stone-900">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一字定乾坤：汉字“炼字”AI视觉呈现研究单</title>
+  <meta name="description" content="基于AI视觉显像的汉字炼字对比实验A4研究单与互动展板，展现《泊船瓜洲》与《荷花》单字替换的视觉张力与三阶跃迁法则。">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --font-serif-sc: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', SimSun, serif;
+      --font-calligraphy: 'Ma Shan Zheng', 'Zhi Mang Xing', 'Kaiti', cursive;
+    }
+    body {
+      font-family: var(--font-serif-sc);
+      background-color: #f3efe6;
+      color: #1a1a1a;
+    }
+    .font-serif-sc {
+      font-family: var(--font-serif-sc);
+    }
+    .font-calligraphy {
+      font-family: var(--font-calligraphy);
+    }
+    .bento-sheet {
+      background-color: #faf9f6;
+      border: 12px solid #e5e1d8;
+      color: #1a1a1a;
+      box-shadow: 0 12px 36px -4px rgba(26, 26, 26, 0.08), 0 0 1px 1px rgba(26, 26, 26, 0.1);
+    }
+    .bento-seal {
+      border: 2px solid #d94124;
+      color: #d94124;
+      border-radius: 9999px;
+      transform: rotate(12deg);
+    }
+    .red-pen-text {
+      color: #d94124;
+      font-family: 'Zhi Mang Xing', 'Ma Shan Zheng', cursive, sans-serif;
+    }
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 3.5mm 4.5mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      html, body {
+        background: #ffffff !important;
+        color: #1a1a1a !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        font-size: 10.5px !important;
+        line-height: 1.25 !important;
+      }
+      .no-print, #inspection-modal, #prompt-modal {
+        display: none !important;
+      }
+      .bento-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      header#header-section {
+        padding-bottom: 3px !important;
+        margin-bottom: 3px !important;
+        border-bottom: 1.5px solid #1a1a1a !important;
+      }
+      header#header-section h1 {
+        font-size: 16px !important;
+        line-height: 1.15 !important;
+      }
+      #student-badge {
+        font-size: 11px !important;
+        padding: 1px 6px !important;
+      }
+      header#header-section p {
+        font-size: 10px !important;
+        line-height: 1.2 !important;
+      }
+      header#header-section .text-\[11px\] {
+        font-size: 9.5px !important;
+        padding: 2px 4px !important;
+        line-height: 1.2 !important;
+      }
+      #experiment-core-zone {
+        margin-top: 3px !important;
+        margin-bottom: 3px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+      }
+      #experiment-group-1, #experiment-group-2 {
+        padding: 4px 6px !important;
+        margin-bottom: 0 !important;
+        border: 1px solid #1a1a1a !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #experiment-group-1 h2, #experiment-group-2 h2 {
+        font-size: 12px !important;
+        line-height: 1.15 !important;
+      }
+      #experiment-group-1 .bg-stone-50.border.border-stone-300,
+      #experiment-group-2 .bg-stone-50.border.border-stone-300 {
+        padding: 2px 4px !important;
+        margin-bottom: 3px !important;
+        font-size: 10px !important;
+      }
+      #experiment-group-1 .grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 4px !important;
+      }
+      #experiment-group-2 .grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 5px !important;
+      }
+      #experiment-group-1 .grid > div,
+      #experiment-group-2 .grid > div {
+        border: 1px solid #d6d3d1 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .aspect-square {
+        aspect-ratio: 1 / 1 !important;
+        height: auto !important;
+        max-height: 22mm !important;
+      }
+      .aspect-square img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+      .red-annotation {
+        padding: 1px !important;
+      }
+      .red-annotation > div {
+        font-size: 8px !important;
+        padding: 1px 3px !important;
+        line-height: 1.1 !important;
+      }
+      .grid .p-2 {
+        padding: 2px 3px !important;
+      }
+      .grid .text-xl {
+        font-size: 13px !important;
+        line-height: 1.1 !important;
+      }
+      .grid p.text-\[11px\] {
+        font-size: 9px !important;
+        line-height: 1.15 !important;
+      }
+      .grid .mt-2.pt-1 {
+        display: none !important;
+      }
+      .mt-3.pt-2\.5.border-t {
+        margin-top: 2px !important;
+        padding-top: 2px !important;
+        padding: 2px 4px !important;
+        font-size: 9.5px !important;
+        line-height: 1.2 !important;
+      }
+      #three-tier-section {
+        padding-top: 3px !important;
+        margin-top: 3px !important;
+        border-top: 1.5px solid #1a1a1a !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #three-tier-section > .grid {
+        display: grid !important;
+        grid-template-columns: 1.85fr 1.15fr !important;
+        gap: 5px !important;
+      }
+      #three-tier-section .p-4 {
+        padding: 3px 5px !important;
+      }
+      #three-tier-section h3 {
+        font-size: 11.5px !important;
+        line-height: 1.15 !important;
+      }
+      #three-tier-section .grid .grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 3px !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+      }
+      #three-tier-section .grid .grid > div {
+        padding: 2px 3px !important;
+      }
+      #three-tier-section .grid .grid p {
+        font-size: 8.5px !important;
+        line-height: 1.15 !important;
+      }
+      #three-tier-section blockquote {
+        font-size: 9.5px !important;
+        line-height: 1.2 !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+        padding-left: 4px !important;
+      }
+      #three-tier-section .space-y-1\.5 {
+        font-size: 8.5px !important;
+        line-height: 1.15 !important;
+      }
+      .bento-seal {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 7.5px !important;
+        border-width: 1.5px !important;
+      }
+      .red-pen-text {
+        color: #d94124 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#f3efe6] antialiased selection:bg-amber-200 selection:text-stone-900 min-h-screen flex flex-col items-center py-4 sm:py-8 px-2 sm:px-4">
 
+  <!-- Top Floating Control Bar -->
+  <div class="sticky top-0 z-40 bg-[#FAF9F6]/95 backdrop-blur-md border-b border-[#1A1A1A] px-4 py-2.5 mb-4 shadow-xs no-print w-full">
+    <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#D94124]"></span>
+        <span class="font-bold font-serif-sc text-[#1A1A1A] text-sm hidden sm:inline">
+          A4 竖版研究单 · Bento Grid 展板
+        </span>
+        <span class="text-xs bg-[#1A1A1A] text-white font-mono px-2 py-0.5 rounded-full uppercase">
+          210mm × 297mm
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap text-xs">
+        <button
+          type="button"
+          id="toggle-red-btn"
+          onclick="toggleRedAnnotations()"
+          class="px-3 py-1.5 font-medium flex items-center gap-1.5 transition-all border bg-red-50 border-[#D94124] text-[#D94124] shadow-2xs font-bold"
+        >
+          <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-[#D94124]"></i>
+          <span id="toggle-red-text">红笔批注：开</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="openPromptModal()"
+          class="px-3 py-1.5 bg-white border border-stone-300 text-stone-800 hover:border-[#1A1A1A] font-medium flex items-center gap-1.5"
+        >
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D94124]"></i>
+          <span>Prompt库</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="window.print()"
+          class="px-4 py-1.5 bg-[#1A1A1A] text-white hover:bg-stone-800 font-bold flex items-center gap-1.5 shadow-sm transition-transform active:scale-95 border border-[#1A1A1A]"
+        >
+          <i data-lucide="printer" class="w-3.5 h-3.5 text-amber-300"></i>
+          <span>一键打印 / 导出A4</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main A4 Standard Study Sheet -->
+  <main id="a4-research-sheet" class="bento-sheet max-w-4xl w-full p-4 sm:p-7 md:p-8 relative transition-all">
+    
+    <!-- Header Section -->
+    <header class="border-b-2 border-[#1A1A1A] pb-2.5 mb-3" id="header-section">
+      <!-- Top Line: Single-line Title + Student Badge -->
+      <div class="flex flex-row items-center justify-between gap-2">
+        <h1 class="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight text-[#1A1A1A] font-serif-sc whitespace-nowrap">
+          一字定乾坤：汉字“炼字”的AI视觉呈现
+        </h1>
+        <div id="student-badge" class="text-xs sm:text-sm font-bold font-serif-sc text-[#1A1A1A] bg-stone-100 border border-stone-300 px-2.5 py-0.5 rounded shadow-2xs shrink-0 whitespace-nowrap">
+          三年3班 任程锦
+        </div>
+      </div>
+
+      <!-- Sub Row: Subtitle + Hypothesis Box -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mt-2 pt-1.5 border-t border-stone-200">
+        <p class="text-xs sm:text-sm text-stone-600 font-serif-sc">
+          保持语句不变 · 替换 1 个核心动词 · 解锁汉字里的“视觉密码与生命光谱”
+        </p>
+        <div class="text-[11px] sm:text-[12px] leading-relaxed bg-white px-2.5 py-1.5 border border-dashed border-stone-400 shadow-2xs md:max-w-[420px] shrink-0">
+          <span class="text-[#D94124] font-bold mr-1">
+            【研究假设与方法】
+          </span>
+          <span class="text-stone-700 leading-snug">
+            古人作诗讲究“推敲”，名家写景注重“炼字”。如果把 AI 当作“语感显像仪”，保持其他词句完全不变，仅替换 1 个核心动词，画面会发生什么质变？汉字里到底藏着怎样的“视觉密码”？
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Experiment Core Zone -->
+    <div class="space-y-4 my-4" id="experiment-core-zone">
+      
+      <!-- Group 1: 泊船瓜洲 -->
+      <section class="border border-[#1A1A1A] bg-white p-3 sm:p-4 shadow-xs" id="experiment-group-1">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3 border-b border-stone-200 pb-2">
+          <div class="flex items-center gap-2">
+            <h2 class="font-bold text-base sm:text-lg text-[#1A1A1A] font-serif-sc">
+              古典名篇《泊船瓜洲》的“动词色谱”实验
+            </h2>
+            <span class="text-xs text-stone-500 font-serif-sc">
+              王安石 [宋]
+            </span>
+          </div>
+          <div class="text-[11px] text-stone-500 font-mono">
+            4张横向对比矩阵
+          </div>
+        </div>
+
+        <!-- Control Sentence Strip -->
+        <div class="bg-stone-50 border border-stone-300 p-2.5 mb-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="font-bold text-stone-900 bg-stone-200 px-1.5 py-0.5 rounded text-xs font-mono">
+              控制原句
+            </span>
+            <span class="font-serif-sc text-stone-800">
+              京口瓜洲一水间，钟山只隔数重山。春风又【 
+              <span id="g1-active-word" class="inline-block min-w-[28px] text-center font-black text-white bg-[#D94124] px-1.5 py-0.5 rounded shadow-xs mx-0.5">绿</span>
+               】江南岸
+            </span>
+          </div>
+          <span class="text-[11px] text-stone-400 font-mono italic">
+            * 仅替换动词，AI Prompt提示词其他环境参数严格一致
+          </span>
+        </div>
+
+        <!-- Cards Grid (4 columns) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+          <!-- Chui -->
+          <div onclick="openInspection('chui', 'group-1')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/poem_chui_1787930667953.jpg" alt="吹" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 有风声无春色，画面清冷
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“吹”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.2 rounded font-mono">
+                    第2阶
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  只有水面波纹，树木枯淡，缺乏色彩与生机。
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">江面波纹微荡</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guo -->
+          <div onclick="openInspection('guo', 'group-1')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/poem_guo_1787930683909.jpg" alt="过" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 如同走马观花，缺乏情感温度
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“过”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.2 rounded font-mono">
+                    第1阶
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  江南岸边机械位移，画面平静，无草木萌发生机。
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">风痕平直掠过</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ran -->
+          <div onclick="openInspection('ran', 'group-1')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/poem_ran_1787930698132.jpg" alt="染" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 着色虽有，但呆板如膏药点染
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“染”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.2 rounded font-mono">
+                    第2阶
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  像油漆刷色，局部生硬变色，分布不自然。
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">块状生硬色斑</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lv (Masterpiece) -->
+          <div onclick="openInspection('lv', 'group-1')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/poem_lv_1787930714261.jpg" alt="绿" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 形容词作动词，生机瞬间铺满江岸！
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“绿”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded font-mono">
+                    第3阶·胜出
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  满山遍野草木返青、生机盎然、春光漫延至天际！
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">漫野翠色连天</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Microscope Annotation Bottom Strip -->
+        <div class="mt-3 pt-2.5 border-t border-stone-200 bg-stone-50/80 p-2.5 text-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-1.5">
+            <span class="font-bold text-stone-800 flex items-center gap-1">
+              🔍【显微镜拉线批注·诗境探微】
+            </span>
+            <span class="text-[11px] text-stone-500 font-serif-sc">
+              王安石初改“到、过、入、满、染”等十余字，最终定为“绿”。
+            </span>
+          </div>
+          <div class="text-[11px] text-stone-700 leading-relaxed space-y-1">
+            <p><strong>AI 显像证明：</strong>“绿”字将形容词活用为动词，不仅赋予了画面极致的【色彩扩散感】，更注入了草木萌发的【时间与生命力】！</p>
+            <p class="text-amber-900 font-medium">💡 一字唤醒整个江南的春天：从静态物理描述跨越到扑面而来的生命律动。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Group 2: 荷花 -->
+      <section class="border border-[#1A1A1A] bg-white p-3 sm:p-4 shadow-xs" id="experiment-group-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3 border-b border-stone-200 pb-2">
+          <div class="flex items-center gap-2">
+            <h2 class="font-bold text-base sm:text-lg text-[#1A1A1A] font-serif-sc">
+              统编教材《荷花》（叶圣陶）的“动态张力”实验
+            </h2>
+            <span class="text-xs text-stone-500 font-serif-sc">
+              叶圣陶
+            </span>
+          </div>
+          <div class="text-[11px] text-stone-500 font-mono">
+            3张横向对比矩阵
+          </div>
+        </div>
+
+        <!-- Control Sentence Strip -->
+        <div class="bg-stone-50 border border-stone-300 p-2.5 mb-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="font-bold text-stone-900 bg-stone-200 px-1.5 py-0.5 rounded text-xs font-mono">
+              控制原句
+            </span>
+            <span class="font-serif-sc text-stone-800">
+              白荷花在这些大圆盘之间【 
+              <span id="g2-active-word" class="inline-block min-w-[28px] text-center font-black text-white bg-[#D94124] px-1.5 py-0.5 rounded shadow-xs mx-0.5">冒</span>
+               】出来。
+            </span>
+          </div>
+          <span class="text-[11px] text-stone-400 font-mono italic">
+            * 仅替换动词，AI Prompt提示词其他环境参数严格一致
+          </span>
+        </div>
+
+        <!-- Cards Grid (3 columns) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <!-- Zhang -->
+          <div onclick="openInspection('zhang', 'group-2')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/lotus_zhang_1787930735012.jpg" alt="长" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 慢条斯理，看不出生命蓬勃之势
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“长”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.2 rounded font-mono">
+                    第1阶
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  荷花静止平淡地立在叶间，缺乏生命冲劲与动态。
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">挺立但无动感</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zuan -->
+          <div onclick="openInspection('zuan', 'group-2')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/lotus_zuan_1787930750972.jpg" alt="钻" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 有动作但显费力犹豫，气势不足
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“钻”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-stone-600 bg-stone-100 border border-stone-200 px-1.5 py-0.2 rounded font-mono">
+                    第2阶
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  荷花从缝隙探头，小心翼翼，略显局促试探。
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">斜出窄缝探头</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mao (Masterpiece) -->
+          <div onclick="openInspection('mao', 'group-2')" class="flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs group">
+            <div class="relative aspect-square w-full bg-stone-100 overflow-hidden">
+              <img src="./images/lotus_mao_1787930766465.jpg" alt="冒" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+              <div class="red-annotation absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
+                <div class="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
+                  ✍️ 破叶而出的爆发力，水珠飞溅的瞬间动能！
+                </div>
+              </div>
+            </div>
+            <div class="p-2 border-t border-stone-200 bg-white flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-baseline justify-between mb-1">
+                  <div class="flex items-center gap-1">
+                    <span class="text-xl font-bold font-serif-sc text-[#1A1A1A]">“冒”</span>
+                    <span class="text-[10px] text-stone-500 font-serif-sc">字</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.2 rounded font-mono">
+                    第3阶·胜出
+                  </span>
+                </div>
+                <p class="text-[11px] text-stone-600 leading-snug line-clamp-2">
+                  破叶而出、带出水花与露珠、向上昂扬迸发的爆发力！
+                </p>
+              </div>
+              <div class="mt-2 pt-1 border-t border-dashed border-stone-200 flex items-center justify-end text-[10px]">
+                <span class="text-stone-700 font-medium">破水昂扬水珠飞溅</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Microscope Annotation Bottom Strip -->
+        <div class="mt-3 pt-2.5 border-t border-stone-200 bg-stone-50/80 p-2.5 text-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-1.5">
+            <span class="font-bold text-stone-800 flex items-center gap-1">
+              🔍【显微镜拉线批注·语感解码】
+            </span>
+            <span class="text-[11px] text-stone-500 font-serif-sc">
+              课后探究题：“体会‘冒’字好在哪里？想一想荷花是怎样冒出来的？”
+            </span>
+          </div>
+          <div class="text-[11px] text-stone-700 leading-relaxed space-y-1">
+            <p><strong>AI 显像证明：</strong>“长”字呆板无奇，“钻”字小心试探，唯有“冒”字让画面瞬间产生【向上破局的动能】与【昂扬生命力】！</p>
+            <p class="text-amber-900 font-medium">💡 不仅写出了长势之快，更写出了荷花争相展示生机、充满灵性的勃勃生机。</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bottom: Three-Tier Model & Research Summary -->
+    <footer class="border-t-2 border-[#1A1A1A] pt-4" id="three-tier-section">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Left Bento: 3-Tier Ladder Model (col-span-2) -->
+        <div class="lg:col-span-2 bg-white text-[#1A1A1A] p-4 flex flex-col justify-between border border-[#1A1A1A] shadow-xs">
+          <div>
+            <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="font-bold text-sm sm:text-base font-serif-sc text-[#1A1A1A]">
+                  写作用词“三阶跃迁”模型
+                </h3>
+              </div>
+              <span class="text-[11px] text-stone-500 font-mono">
+                动词表现力进化梯次
+              </span>
+            </div>
+
+            <!-- Stepped Ladder Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-2">
+              <!-- Level 1 -->
+              <div class="p-2.5 border border-stone-200 bg-stone-50 hover:bg-stone-100 transition-all">
+                <div class="text-xs font-bold text-stone-800 mb-1">
+                  第1阶 物理位移
+                </div>
+                <div class="bg-stone-200 text-stone-800 font-mono text-xs px-1.5 py-0.5 rounded inline-block mb-1.5 border border-stone-300 font-medium">
+                  到 / 过 / 长
+                </div>
+                <p class="text-[10px] text-stone-600 leading-snug">
+                  记录事实与位置移动，画面平淡静态。
+                </p>
+              </div>
+
+              <!-- Level 2 -->
+              <div class="p-2.5 border border-amber-200 bg-amber-50/60 hover:bg-amber-100/70 transition-all">
+                <div class="text-xs font-bold text-amber-900 mb-1">
+                  第2阶 感官赋色
+                </div>
+                <div class="bg-amber-100 text-amber-900 font-mono text-xs px-1.5 py-0.5 rounded inline-block mb-1.5 border border-amber-300 font-medium">
+                  染 / 钻 / 吹
+                </div>
+                <p class="text-[10px] text-stone-700 leading-snug">
+                  赋予色彩与状态变化，开始具备视觉感。
+                </p>
+              </div>
+
+              <!-- Level 3: Masterpiece -->
+              <div class="p-2.5 border-2 border-[#D94124] bg-red-50/70 relative hover:bg-red-100/60 transition-all">
+                <div class="absolute top-1 right-1 text-[9px] bg-[#D94124] text-white font-bold px-1.5 py-0.2 rounded">
+                  神笔
+                </div>
+                <div class="text-xs font-bold text-[#D94124] mb-1">
+                  第3阶 生命共情
+                </div>
+                <div class="bg-[#D94124] text-white font-black text-xs px-1.5 py-0.5 rounded inline-block mb-1.5 shadow-2xs">
+                  绿 / 冒
+                </div>
+                <p class="text-[10px] text-stone-800 leading-snug">
+                  注入生命动能与主观共情，字字成画！
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 pt-2 border-t border-stone-200 flex items-center justify-between text-[10px] text-stone-600 font-mono">
+            <span>● 跃迁机制：词性活用 + 空间动能 + 情感投射</span>
+            <span class="text-[#D94124] font-semibold">AI视觉显像实验验证</span>
+          </div>
+        </div>
+
+        <!-- Right Bento: Research Conclusion & Stamped Seal -->
+        <div class="bg-white border border-[#1A1A1A] p-4 flex flex-col justify-between shadow-xs">
+          <div>
+            <div class="text-[11px] font-bold text-stone-700 mb-1 font-serif-sc">
+              探究结语
+            </div>
+
+            <blockquote class="text-xs sm:text-sm font-serif-sc text-stone-800 leading-relaxed italic border-l-2 border-[#D94124] pl-2.5 my-2">
+              汉字之美，在于“一字定乾坤”。好文章不是堆砌词藻，而是找到那个能让文字
+              <span class="font-bold text-[#1A1A1A] underline decoration-[#D94124] decoration-2">
+                “瞬间活成一幅画”
+              </span>
+              的神来之笔！
+            </blockquote>
+
+            <div class="mt-3 space-y-1.5 text-[11px] text-stone-700">
+              <div class="flex items-start gap-1.5">
+                <i data-lucide="feather" class="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5"></i>
+                <span>写作心法：避免平铺直叙的“到”，多用赋能赋色的动词。</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <i data-lucide="feather" class="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5"></i>
+                <span>AI 语感训练：输入不同动词生成画面，肉眼直观“验词”。</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stamped Seal Badge -->
+          <div class="mt-3 flex items-center justify-end">
+            <div class="w-14 h-14 bento-seal flex flex-col items-center justify-center text-[10px] font-bold leading-tight text-center shadow-2xs">
+              <span>神来</span>
+              <span>之笔</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Inspection Modal (Lightbox) -->
+  <div id="inspection-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-stone-900/70 backdrop-blur-xs no-print" onclick="closeInspection()">
+    <div class="bg-white border border-stone-300 rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 relative" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeInspection()" class="absolute top-3 right-3 p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2 border-b border-stone-200 pb-3 mb-4">
+        <div class="p-2 rounded-lg bg-amber-100 text-amber-900">
+          <i data-lucide="microscope" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 id="modal-title" class="text-lg font-bold text-stone-900 font-serif-sc">
+            动词【绿】显微镜深度探究
+          </h3>
+          <p id="modal-control-sentence" class="text-xs text-stone-500">
+            控制原句：春风又【绿】江南岸
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div class="flex flex-col">
+          <div class="relative aspect-square rounded-lg overflow-hidden border border-stone-200 shadow-inner bg-stone-100 group">
+            <img id="modal-image" src="" alt="preview" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between mt-2 gap-2 text-xs">
+            <button type="button" id="modal-prev-btn" class="px-2.5 py-1 rounded border border-stone-300 hover:bg-stone-100 text-stone-700 flex items-center gap-1">
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              <span id="modal-prev-label">上一字</span>
+            </button>
+            <button type="button" id="modal-next-btn" class="px-2.5 py-1 rounded border border-stone-300 hover:bg-stone-100 text-stone-700 flex items-center gap-1">
+              <span id="modal-next-label">下一字</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm">
+          <div class="bg-stone-50 p-3 rounded-lg border border-stone-200">
+            <span class="font-bold text-stone-900 block mb-1 text-xs uppercase tracking-wider text-amber-800">
+              🖼️ AI显像画面特征
+            </span>
+            <p id="modal-desc" class="text-stone-700 leading-relaxed font-medium"></p>
+          </div>
+
+          <div class="bg-amber-50/70 p-3 rounded-lg border border-amber-200">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-amber-900 text-xs flex items-center gap-1">
+                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                写作用词层级
+              </span>
+              <span id="modal-tier" class="font-bold text-xs text-amber-800 bg-amber-100 px-2 py-0.5 rounded"></span>
+            </div>
+            <p id="modal-tier-explain" class="text-stone-600 text-xs"></p>
+          </div>
+
+          <div id="modal-red-box" class="bg-rose-50 p-3 rounded-lg border border-rose-200">
+            <span class="font-bold text-rose-900 block mb-1 text-xs">
+              ✍️ 探究批注与视觉聚焦点
+            </span>
+            <p id="modal-red-note" class="red-pen-text text-sm font-bold text-red-700"></p>
+            <div id="modal-focus-area" class="text-[11px] text-stone-500 mt-1"></div>
+          </div>
+
+          <div class="bg-stone-900 text-stone-100 p-3 rounded-lg text-xs font-mono relative">
+            <div class="flex items-center justify-between mb-1 text-stone-400">
+              <span>AI 生图 Prompt 提示词：</span>
+              <button type="button" onclick="copyModalPrompt()" class="hover:text-white flex items-center gap-1 text-amber-400 font-sans">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span id="modal-copy-text">复制Prompt</span>
+              </button>
+            </div>
+            <p id="modal-prompt" class="text-stone-300 break-words leading-relaxed text-[11px]"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-stone-200 pt-3 flex items-center justify-between text-xs text-stone-500">
+        <span>提示：可以在上方左右切换其他同组汉字进行并列对比</span>
+        <button type="button" onclick="closeInspection()" class="bg-stone-800 text-white hover:bg-stone-700 px-4 py-1.5 rounded text-xs font-medium">
+          完成查看
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt Library Modal -->
+  <div id="prompt-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-stone-900/70 backdrop-blur-xs no-print" onclick="closePromptModal()">
+    <div class="bg-white border border-stone-300 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 relative" onclick="event.stopPropagation()">
+      <button type="button" onclick="closePromptModal()" class="absolute top-3 right-3 p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center justify-between border-b border-stone-200 pb-3 mb-4">
+        <div class="flex items-center gap-2">
+          <div class="p-2 rounded-lg bg-amber-100 text-amber-900">
+            <i data-lucide="palette" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-stone-900 font-serif-sc">
+              🎨 实验配套：AI 图像生成提示词（Prompt 库）
+            </h3>
+            <p class="text-xs text-stone-500">
+              可适用于 Midjourney、即梦 AI、可灵、DALL-E、Gemini Imagen 等主流模型
+            </p>
+          </div>
+        </div>
+
+        <button type="button" onclick="copyAllPrompts()" class="text-xs bg-amber-800 text-white hover:bg-amber-700 px-3 py-1.5 rounded flex items-center gap-1 font-medium transition-colors">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span id="copy-all-btn-text">一键复制全部 7 组 Prompt</span>
+        </button>
+      </div>
+
+      <!-- Tips -->
+      <div class="bg-amber-50/80 border border-amber-200 rounded-lg p-3 mb-4 text-xs">
+        <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-amber-700"></i>
+          <span>📌 展板制作与实物布展建议</span>
+        </div>
+        <ul class="space-y-1 text-stone-700 list-disc list-inside">
+          <li><strong>红笔标注是点睛之笔：</strong>在打印出的 A4 纸上，用真正的红色圆珠笔/荧光笔在“绿”图和“冒”图的关键细节画上圆圈并拉出指引线，手写 1 句精读批注，突出真实探究质感。</li>
+          <li><strong>重点突出：</strong>将两张核心图（“绿”和“冒”）的边框加粗或贴上金色边框，让师生在 2 米外一眼看出“一字之差”的视觉冲击。</li>
+        </ul>
+      </div>
+
+      <!-- Group 1 Prompts -->
+      <div class="mb-5">
+        <h4 class="font-bold text-sm text-stone-900 mb-2 border-b border-stone-200 pb-1 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-700"></span>
+          1. 《泊船瓜洲》组（中国江南水墨写意风格 · 高画质 · 统一视角）
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5" id="group1-prompts-container"></div>
+      </div>
+
+      <!-- Group 2 Prompts -->
+      <div>
+        <h4 class="font-bold text-sm text-stone-900 mb-2 border-b border-stone-200 pb-1 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-700"></span>
+          2. 《荷花》组（写实摄影或精细工笔画 · 微距特写 · 统一视角）
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5" id="group2-prompts-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript logic -->
+  <script>
+    const DATA = {
+      group1: {
+        id: "group-1",
+        title: "古典名篇《泊船瓜洲》的“动词色谱”实验",
+        controlPrefix: "京口瓜洲一水间，钟山只隔数重山。春风又【 ",
+        controlSuffix: " 】江南岸",
+        items: [
+          {
+            id: "chui",
+            word: "吹",
+            image: "./images/poem_chui_1787930667953.jpg",
+            visualDescription: "只有水面波纹，树木枯淡，缺乏色彩与生机。",
+            prompt: "中国传统水墨画，江南水乡，春天早晨，只有微微的春风吹过江面泛起水波，树木与山峦颜色暗淡，缺少绿色与生机，国画写意风格，留白 --ar 1:1",
+            tier: 2,
+            tierLabel: "第2阶·局部动作",
+            tierExplain: "具备局部细节与感官动作，但画面缺乏整体生命律动的统摄。",
+            tag: "仅有气流",
+            note: "有风声无春色，画面清冷",
+            focusArea: "江面波纹微荡"
+          },
+          {
+            id: "guo",
+            word: "过",
+            image: "./images/poem_guo_1787930683909.jpg",
+            visualDescription: "江南岸边机械位移，画面平静，无草木萌发生机。",
+            prompt: "中国传统水墨画，江南江岸，一缕春风吹过山峦与水岸，画面平静，只有空间移动的痕迹，没有草木萌发的生命力，国画淡彩风格 --ar 1:1",
+            tier: 1,
+            tierLabel: "第1阶·物理位移",
+            tierExplain: "单纯记录空间移动或物理生长事实，语言平铺直叙，画面缺乏情绪与视觉冲击。",
+            tag: "空间位移",
+            note: "如同走马观花，缺乏情感温度",
+            focusArea: "风痕平直掠过"
+          },
+          {
+            id: "ran",
+            word: "染",
+            image: "./images/poem_ran_1787930698132.jpg",
+            visualDescription: "像油漆刷色，局部生硬变色，分布不自然。",
+            prompt: "中国传统水墨画，江南山水，岸边的树木有一块块局部的绿色，像毛笔刚点上去的颜料色块，局部上色，色彩分布不自然，工笔淡彩 --ar 1:1",
+            tier: 2,
+            tierLabel: "第2阶·感官赋色",
+            tierExplain: "捕捉具体视觉色彩或局部精细动作，有具体的画面细节，但缺乏宏大统摄的生命张力。",
+            tag: "人工笔触",
+            note: "着色虽有，但呆板如膏药点染",
+            focusArea: "块状生硬色斑"
+          },
+          {
+            id: "lv",
+            word: "绿",
+            isMaster: true,
+            image: "./images/poem_lv_1787930714261.jpg",
+            visualDescription: "满山遍野草木返青、生机盎然、春光漫延至天际！",
+            prompt: "中国唯美水墨写意大片，江南春晓，满山遍野、江岸两旁瞬间返青，生机盎然，嫩绿与翠绿交织蔓延至天际，春光烂漫，充满蓬勃的生命力与诗意，大师级杰作 --ar 1:1",
+            tier: 3,
+            tierLabel: "第3阶·生命共情 (神来之笔)",
+            tierExplain: "激活全景生命共鸣，赋予词句跨越感官的时间维度与爆发动能。",
+            tag: "神来之笔！",
+            note: "形容词作动词，生机瞬间铺满江岸！",
+            focusArea: "漫野翠色连天"
+          }
+        ]
+      },
+      group2: {
+        id: "group-2",
+        title: "《荷花》（叶圣陶）的“动态张力”实验",
+        controlPrefix: "白荷花在这些大圆盘之间【 ",
+        controlSuffix: " 】出来。",
+        items: [
+          {
+            id: "zhang",
+            word: "长",
+            image: "./images/lotus_zhang_1787930735012.jpg",
+            visualDescription: "荷花静止平淡地立在叶间，缺乏生命冲劲与动态。",
+            prompt: "微距摄影，大片碧绿的荷叶丛中，静静伫立着一朵白荷花，荷花静止平淡，没有水珠，没有动态，普通自然光 --ar 1:1",
+            tier: 1,
+            tierLabel: "第1阶·物理陈述",
+            tierExplain: "平铺直叙记录空间或状态，语意呆板，视觉冲击弱。",
+            tag: "静止平淡",
+            note: "慢条斯理，看不出生命蓬勃之势",
+            focusArea: "挺立但无动感"
+          },
+          {
+            id: "zuan",
+            word: "钻",
+            image: "./images/lotus_zuan_1787930750972.jpg",
+            visualDescription: "荷花从缝隙探头，小心翼翼，略显局促试探。",
+            prompt: "微距摄影，大片茂密的巨大荷叶之间，一朵白荷花花苞小心翼翼地从荷叶缝隙中斜着伸出来，动作显得局促、试探 --ar 1:1",
+            tier: 2,
+            tierLabel: "第2阶·细节动作",
+            tierExplain: "具备局部细节与感官动作，但画面缺乏整体生命律动的统摄。",
+            tag: "小心局促",
+            note: "有动作但显费力犹豫，气势不足",
+            focusArea: "斜出窄缝探头"
+          },
+          {
+            id: "mao",
+            word: "冒",
+            isMaster: true,
+            image: "./images/lotus_mao_1787930766465.jpg",
+            visualDescription: "破叶而出、带出水花与露珠、向上昂扬迸发的爆发力！",
+            prompt: "高速微距动态摄影，巨大圆润的墨绿荷叶丛中，一朵盛开的雪白荷花以极具爆发力的姿态向上破水而出，带起飞溅的晶莹水珠与晨露，昂扬挺拔，生机蓬勃，晨光穿透花瓣，极具生命力 --ar 1:1",
+            tier: 3,
+            tierLabel: "第3阶·生命共情 (神来之笔)",
+            tierExplain: "激活全景生命共鸣，赋予词句跨越感官的时间维度与爆发动能。",
+            tag: "迸发昂扬！",
+            note: "破叶而出的爆发力，水珠飞溅的瞬间动能！",
+            focusArea: "破水昂扬水珠飞溅"
+          }
+        ]
+      }
+    };
+
+    let showRed = true;
+    let currentGroupId = null;
+    let currentItemIndex = null;
+    let currentPromptText = '';
+
+    function toggleRedAnnotations() {
+      showRed = !showRed;
+      const annotations = document.querySelectorAll('.red-annotation');
+      annotations.forEach(el => {
+        el.style.display = showRed ? 'flex' : 'none';
+      });
+      const btn = document.getElementById('toggle-red-btn');
+      const text = document.getElementById('toggle-red-text');
+      if (showRed) {
+        btn.className = 'px-3 py-1.5 font-medium flex items-center gap-1.5 transition-all border bg-red-50 border-[#D94124] text-[#D94124] shadow-2xs font-bold';
+        text.innerText = '红笔批注：开';
+      } else {
+        btn.className = 'px-3 py-1.5 bg-white border border-stone-300 text-stone-700 hover:bg-stone-50 font-medium flex items-center gap-1.5';
+        text.innerText = '红笔批注：关';
+      }
+    }
+
+    function openInspection(itemId, groupId) {
+      const groupKey = groupId === 'group-1' ? 'group1' : 'group2';
+      const group = DATA[groupKey];
+      const index = group.items.findIndex(i => i.id === itemId);
+      if (index === -1) return;
+
+      currentGroupId = groupId;
+      currentItemIndex = index;
+      renderModalContent();
+      document.getElementById('inspection-modal').classList.remove('hidden');
+    }
+
+    function closeInspection() {
+      document.getElementById('inspection-modal').classList.add('hidden');
+    }
+
+    function renderModalContent() {
+      const groupKey = currentGroupId === 'group-1' ? 'group1' : 'group2';
+      const group = DATA[groupKey];
+      const item = group.items[currentItemIndex];
+      if (!item) return;
+
+      currentPromptText = item.prompt;
+      document.getElementById('modal-title').innerText = `${group.title} · 动词【${item.word}】显微镜深度探究`;
+      document.getElementById('modal-control-sentence').innerHTML = `控制原句：${group.controlPrefix}<strong class="text-amber-800 underline font-bold px-0.5">${item.word}</strong>${group.controlSuffix}`;
+      document.getElementById('modal-image').src = item.image;
+      document.getElementById('modal-desc').innerText = item.visualDescription;
+      document.getElementById('modal-tier').innerText = item.tierLabel;
+      document.getElementById('modal-tier-explain').innerText = item.tierExplain;
+      document.getElementById('modal-red-note').innerText = `【${item.tag}】${item.note}`;
+      document.getElementById('modal-focus-area').innerText = `焦点观察：${item.focusArea}`;
+      document.getElementById('modal-prompt').innerText = item.prompt;
+      document.getElementById('modal-copy-text').innerText = '复制Prompt';
+
+      // Prev / Next button states
+      const prevBtn = document.getElementById('modal-prev-btn');
+      const nextBtn = document.getElementById('modal-next-btn');
+      const prevLabel = document.getElementById('modal-prev-label');
+      const nextLabel = document.getElementById('modal-next-label');
+
+      if (currentItemIndex > 0) {
+        prevBtn.disabled = false;
+        prevBtn.className = 'px-2.5 py-1 rounded border border-stone-300 hover:bg-stone-100 text-stone-700 flex items-center gap-1 cursor-pointer';
+        prevLabel.innerText = `上一字：${group.items[currentItemIndex - 1].word}`;
+        prevBtn.onclick = () => { currentItemIndex--; renderModalContent(); };
+      } else {
+        prevBtn.disabled = true;
+        prevBtn.className = 'px-2.5 py-1 rounded border border-stone-200 text-stone-300 cursor-not-allowed flex items-center gap-1';
+        prevLabel.innerText = '上一字：无';
+        prevBtn.onclick = null;
+      }
+
+      if (currentItemIndex < group.items.length - 1) {
+        nextBtn.disabled = false;
+        nextBtn.className = 'px-2.5 py-1 rounded border border-stone-300 hover:bg-stone-100 text-stone-700 flex items-center gap-1 cursor-pointer';
+        nextLabel.innerText = `下一字：${group.items[currentItemIndex + 1].word}`;
+        nextBtn.onclick = () => { currentItemIndex++; renderModalContent(); };
+      } else {
+        nextBtn.disabled = true;
+        nextBtn.className = 'px-2.5 py-1 rounded border border-stone-200 text-stone-300 cursor-not-allowed flex items-center gap-1';
+        nextLabel.innerText = '下一字：无';
+        nextBtn.onclick = null;
+      }
+      lucide.createIcons();
+    }
+
+    function copyModalPrompt() {
+      navigator.clipboard.writeText(currentPromptText);
+      document.getElementById('modal-copy-text').innerText = '已复制！';
+      setTimeout(() => {
+        document.getElementById('modal-copy-text').innerText = '复制Prompt';
+      }, 2000);
+    }
+
+    function openPromptModal() {
+      renderPromptCards();
+      document.getElementById('prompt-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closePromptModal() {
+      document.getElementById('prompt-modal').classList.add('hidden');
+    }
+
+    function renderPromptCards() {
+      const g1Container = document.getElementById('group1-prompts-container');
+      const g2Container = document.getElementById('group2-prompts-container');
+
+      g1Container.innerHTML = DATA.group1.items.map(item => `
+        <div class="p-3 rounded-lg border text-xs ${item.isMaster ? 'bg-amber-50/80 border-amber-400 ring-1 ring-amber-300' : 'bg-stone-50 border-stone-200'}">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-stone-900 flex items-center gap-1">
+              【${item.word}】字图
+              ${item.isMaster ? '<span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.2 rounded">核心图</span>' : ''}
+            </span>
+            <button type="button" onclick="copySinglePrompt('${item.id}', \`${item.prompt.replace(/`/g, '\\`')}\`)" class="text-stone-500 hover:text-amber-800 flex items-center gap-1 font-mono">
+              <span id="copy-btn-${item.id}">复制</span>
+            </button>
+          </div>
+          <p class="font-mono text-[11px] text-stone-700 bg-white p-2 rounded border border-stone-200 break-words leading-relaxed">
+            ${item.prompt}
+          </p>
+        </div>
+      `).join('');
+
+      g2Container.innerHTML = DATA.group2.items.map(item => `
+        <div class="p-3 rounded-lg border text-xs ${item.isMaster ? 'bg-amber-50/80 border-amber-400 ring-1 ring-amber-300' : 'bg-stone-50 border-stone-200'}">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-stone-900 flex items-center gap-1">
+              【${item.word}】字图
+              ${item.isMaster ? '<span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.2 rounded">核心图</span>' : ''}
+            </span>
+            <button type="button" onclick="copySinglePrompt('${item.id}', \`${item.prompt.replace(/`/g, '\\`')}\`)" class="text-stone-500 hover:text-amber-800 flex items-center gap-1 font-mono">
+              <span id="copy-btn-${item.id}">复制</span>
+            </button>
+          </div>
+          <p class="font-mono text-[11px] text-stone-700 bg-white p-2 rounded border border-stone-200 break-words leading-relaxed">
+            ${item.prompt}
+          </p>
+        </div>
+      `).join('');
+    }
+
+    function copySinglePrompt(id, text) {
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById(`copy-btn-${id}`);
+      if (btn) {
+        btn.innerText = '已复制';
+        setTimeout(() => { btn.innerText = '复制'; }, 2000);
+      }
+    }
+
+    function copyAllPrompts() {
+      const allPrompts = [...DATA.group1.items, ...DATA.group2.items]
+        .map(item => `【${item.word}】字AI显像Prompt:\n${item.prompt}`)
+        .join('\n\n');
+      navigator.clipboard.writeText(allPrompts);
+      const btnText = document.getElementById('copy-all-btn-text');
+      btnText.innerText = '已复制全部！';
+      setTimeout(() => { btnText.innerText = '一键复制全部 7 组 Prompt'; }, 2000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

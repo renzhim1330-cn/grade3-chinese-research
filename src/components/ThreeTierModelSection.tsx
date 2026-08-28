@@ -11,11 +11,8 @@ export const ThreeTierModelSection: React.FC = () => {
         {/* Left Bento: 3-Tier Ladder Model (col-span-2) */}
         <div className="lg:col-span-2 bg-white text-[#1A1A1A] p-4 flex flex-col justify-between border border-[#1A1A1A] shadow-xs">
           <div>
-            <div className="flex items-center justify-between border-b border-stone-200 pb-2 mb-3">
-              <div className="flex items-center gap-2">
-                <span className="bg-[#1A1A1A] text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  MODEL
-                </span>
+            <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-3">
+              <div class="flex items-center gap-2">
                 <h3 className="font-bold text-sm sm:text-base font-serif-sc text-[#1A1A1A]">
                   三年级写作用词“三阶跃迁”模型
                 </h3>
@@ -37,9 +34,6 @@ export const ThreeTierModelSection: React.FC = () => {
                     : 'border-stone-200 bg-stone-50'
                 }`}
               >
-                <div className="text-[10px] text-stone-500 font-mono mb-1 font-semibold">
-                  LEVEL 01
-                </div>
                 <div className="text-xs font-bold text-stone-800 mb-1">
                   第1阶 物理位移
                 </div>
@@ -61,9 +55,6 @@ export const ThreeTierModelSection: React.FC = () => {
                     : 'border-amber-200 bg-amber-50/60'
                 }`}
               >
-                <div className="text-[10px] text-amber-800 font-mono mb-1 font-semibold">
-                  LEVEL 02
-                </div>
                 <div className="text-xs font-bold text-amber-900 mb-1">
                   第2阶 感官赋色
                 </div>
@@ -88,9 +79,6 @@ export const ThreeTierModelSection: React.FC = () => {
                 <div className="absolute top-1 right-1 text-[9px] bg-[#D94124] text-white font-bold px-1.5 py-0.2 rounded">
                   神笔
                 </div>
-                <div className="text-[10px] text-[#D94124] font-mono mb-1 font-bold">
-                  LEVEL 03
-                </div>
                 <div className="text-xs font-bold text-[#D94124] mb-1">
                   第3阶 生命共情
                 </div>
@@ -113,8 +101,8 @@ export const ThreeTierModelSection: React.FC = () => {
         {/* Right Bento: Light Research Conclusion & Stamped Seal */}
         <div className="bg-white border border-[#1A1A1A] p-4 flex flex-col justify-between shadow-xs">
           <div>
-            <div className="text-[10px] text-stone-400 mb-1 tracking-widest uppercase font-mono">
-              RESEARCH SUMMARY · 探究结语
+            <div className="text-[11px] font-bold text-stone-700 mb-1 font-serif-sc">
+              探究结语
             </div>
 
             <blockquote className="text-xs sm:text-sm font-serif-sc text-stone-800 leading-relaxed italic border-l-2 border-[#D94124] pl-2.5 my-2">
