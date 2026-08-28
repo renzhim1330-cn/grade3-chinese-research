@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ExperimentGroup, ExperimentItem } from '../data';
-import { Sparkles, ZoomIn, Copy, Check, Eye } from 'lucide-react';
+import { ZoomIn, Copy, Check, Eye } from 'lucide-react';
 
 interface ExperimentSectionProps {
   group: ExperimentGroup;
@@ -74,11 +74,9 @@ export const ExperimentSection: React.FC<ExperimentSectionProps> = ({
             <div
               key={item.id}
               onClick={() => setActiveWordId(item.id)}
-              className={`flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative ${
-                isMaster
-                  ? 'border-2 border-[#D94124] bg-emerald-50/40 shadow-xs ring-1 ring-[#D94124]/30'
-                  : 'border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs'
-              } ${isSelected ? 'ring-2 ring-stone-900 shadow-md' : ''}`}
+              className={`flex flex-col justify-between transition-all duration-200 cursor-pointer overflow-hidden relative border border-stone-300 bg-white hover:border-[#1A1A1A] hover:shadow-xs ${
+                isSelected ? 'ring-2 ring-stone-900 shadow-md' : ''
+              }`}
             >
               {/* Image Preview Area */}
               <div className="relative aspect-square w-full bg-stone-100 overflow-hidden group">
@@ -90,19 +88,11 @@ export const ExperimentSection: React.FC<ExperimentSectionProps> = ({
                   loading="lazy"
                 />
 
-                {/* Masterpiece Ribbon */}
-                {isMaster && (
-                  <div className="absolute top-1 right-1 bg-[#D94124] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs flex items-center gap-0.5">
-                    <Sparkles className="w-2.5 h-2.5" />
-                    <span>核心神笔</span>
-                  </div>
-                )}
-
                 {/* Red Pen Callout Graphic */}
                 {showRedAnnotations && item.redAnnotation && (
                   <div className="absolute inset-0 pointer-events-none flex flex-col justify-end p-1.5">
                     {isMaster ? (
-                      <div className="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text animate-pulse">
+                      <div className="bg-[#D94124]/95 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm red-pen-text">
                         ✍️ {item.redAnnotation.note}
                       </div>
                     ) : (
