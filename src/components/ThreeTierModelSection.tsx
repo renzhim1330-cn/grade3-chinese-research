@@ -6,15 +6,15 @@ export const ThreeTierModelSection: React.FC = () => {
   const [activeTier, setActiveTier] = useState<number | null>(null);
 
   return (
-    <footer className="border-t-2 border-[#1A1A1A] pt-4" id="three-tier-section">
+    <footer className="" id="three-tier-section">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Left Bento: 3-Tier Ladder Model (col-span-2) */}
         <div className="lg:col-span-2 bg-white text-[#1A1A1A] p-4 flex flex-col justify-between border border-[#1A1A1A] shadow-xs">
           <div>
-            <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-3">
-              <div class="flex items-center gap-2">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-2 mb-3">
+              <div className="flex items-center gap-2">
                 <h3 className="font-bold text-sm sm:text-base font-serif-sc text-[#1A1A1A]">
-                  三年级写作用词“三阶跃迁”模型
+                  写作用词“三阶跃迁”模型
                 </h3>
               </div>
               <span className="text-[11px] text-stone-500 font-mono">
@@ -113,25 +113,42 @@ export const ThreeTierModelSection: React.FC = () => {
               的神来之笔！
             </blockquote>
 
-            <div className="mt-3 space-y-1.5 text-[11px] text-stone-700">
-              <div className="flex items-start gap-1.5">
-                <Feather className="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5" />
-                <span>写作心法：避免平铺直叙的“到”，多用赋能赋色的动词。</span>
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <div className="space-y-1.5 text-[11px] text-stone-700 flex-1">
+                <div className="flex items-start gap-1.5">
+                  <Feather className="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5" />
+                  <span>写作心法：避免平铺直叙的“到”，多用赋能赋色的动词。</span>
+                </div>
+                <div className="flex items-start gap-1.5">
+                  <Feather className="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5" />
+                  <span>AI 语感训练：输入不同动词生成画面，肉眼直观“验词”。</span>
+                </div>
               </div>
-              <div className="flex items-start gap-1.5">
-                <Feather className="w-3.5 h-3.5 text-[#D94124] shrink-0 mt-0.5" />
-                <span>AI 语感训练：输入不同动词生成画面，肉眼直观“验词”。</span>
+
+              {/* Stamped Seal Badge */}
+              <div className="w-14 h-14 bento-seal flex flex-col items-center justify-center text-[10px] font-bold leading-tight text-center shadow-2xs shrink-0">
+                <span>神来</span>
+                <span>之笔</span>
               </div>
             </div>
           </div>
 
-          {/* Stamped Seal Badge */}
-          <div className="mt-3 flex items-center justify-end">
-            <div className="w-14 h-14 bento-seal flex flex-col items-center justify-center text-[10px] font-bold leading-tight text-center shadow-2xs">
-              <span>神来</span>
-              <span>之笔</span>
-            </div>
-          </div>
+          {/* Online URL Badge (Single line at the bottom, far from the seal above) */}
+          <a
+            href="https://renzhim1330-cn.github.io/grade3-chinese-research/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-right group no-underline hidden print:flex items-center justify-end gap-1.5 mt-auto pt-1.5"
+            id="online-research-link"
+          >
+            <Sparkles className="w-3 h-3 text-[#D94124] shrink-0" />
+            <span className="text-[9.5px] font-bold text-stone-800 font-serif-sc group-hover:text-[#D94124]">
+              解锁完整交互体验
+            </span>
+            <span className="font-mono text-[8.5px] text-stone-500 tracking-tight group-hover:underline decoration-stone-400">
+              https://renzhim1330-cn.github.io/grade3-chinese-research/
+            </span>
+          </a>
         </div>
       </div>
     </footer>

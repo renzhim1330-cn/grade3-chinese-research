@@ -41,13 +41,13 @@ export default function App() {
       {/* Main A4 Standard Study Sheet & Poster Container with Bento Framing */}
       <main
         id="a4-research-sheet"
-        className="bento-sheet max-w-4xl w-full p-4 sm:p-7 md:p-8 relative transition-all"
+        className="bento-sheet max-w-4xl w-full p-4 sm:p-7 md:p-8 relative transition-all flex flex-col gap-4 sm:gap-5"
       >
         {/* Top 10%: Header & Hypothesis Bento */}
         <HeaderSection />
 
         {/* Middle 65%: Dual-Track Experiment Group 1 & Group 2 */}
-        <div className="space-y-4 my-4" id="experiment-core-zone">
+        <div className="flex flex-col gap-4 sm:gap-5" id="experiment-core-zone">
           {/* Experiment Group 1: 泊船瓜洲 */}
           <ExperimentSection
             group={EXPERIMENT_GROUP_1}

@@ -3,11 +3,11 @@ import { RESEARCH_HEADER } from '../data';
 
 export const HeaderSection: React.FC = () => {
   return (
-    <header className="border-b-2 border-[#1A1A1A] pb-2.5 mb-3" id="header-section">
+    <header className="" id="header-section">
       {/* Top Line: Title (Full complete single line) + Student Badge on top right */}
       <div className="flex flex-row items-center justify-between gap-2">
         <h1 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight text-[#1A1A1A] font-serif-sc whitespace-nowrap">
-          一字定乾坤：汉字“炼字”的AI视觉呈现
+          一字定乾坤：汉语言“炼字”艺术的视觉密码
         </h1>
         <div
           id="student-badge"
